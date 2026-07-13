@@ -17,7 +17,7 @@ overflow:hidden;
 
 body{
 
-background:url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80");
+background:url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=80");
 
 background-size:cover;
 background-position:center;
@@ -45,13 +45,11 @@ justify-content:center;
 align-items:center;
 flex-direction:column;
 
-background:rgba(0,0,0,.28);
+background:rgba(0,0,0,.25);
 
 z-index:999;
 
 }
-
-/* FIXED */
 
 .hidden{
 
@@ -65,7 +63,7 @@ LOGO
 
 #logo{
 
-width:min(340px,70vw);
+width:min(320px,70vw);
 
 animation:zoom 2s infinite alternate;
 
@@ -97,11 +95,11 @@ background:white;
 
 width:min(850px,92vw);
 
-padding:30px;
+padding:28px;
 
-border-radius:25px;
+border-radius:22px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.25);
+box-shadow:0 8px 25px rgba(0,0,0,.25);
 
 text-align:center;
 
@@ -109,17 +107,17 @@ text-align:center;
 
 .instructionBox h1{
 
+font-size:2rem;
+
 color:#0b7b28;
 
-margin-bottom:20px;
-
-font-size:2rem;
+margin-bottom:15px;
 
 }
 
 .instructionBox p{
 
-font-size:1.2rem;
+font-size:1.15rem;
 
 line-height:1.6;
 
@@ -129,17 +127,17 @@ margin:8px 0;
 
 button{
 
-padding:15px 35px;
+padding:14px 34px;
 
 font-size:22px;
+
+border:none;
+
+border-radius:14px;
 
 background:#43a047;
 
 color:white;
-
-border:none;
-
-border-radius:15px;
 
 cursor:pointer;
 
@@ -149,9 +147,9 @@ transition:.3s;
 
 button:hover{
 
-transform:scale(1.05);
-
 background:#2e7d32;
+
+transform:scale(1.05);
 
 }
 
@@ -177,9 +175,7 @@ HEADER
 
 header{
 
-height:70px;
-
-background:rgba(255,255,255,.92);
+height:60px;
 
 display:flex;
 
@@ -187,7 +183,9 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:0 20px;
+padding:0 18px;
+
+background:rgba(255,255,255,.92);
 
 box-shadow:0 3px 10px rgba(0,0,0,.15);
 
@@ -195,7 +193,7 @@ box-shadow:0 3px 10px rgba(0,0,0,.15);
 
 header h2{
 
-font-size:28px;
+font-size:24px;
 
 color:#0b7b28;
 
@@ -205,43 +203,47 @@ color:#0b7b28;
 
 background:#fff59d;
 
-padding:10px 20px;
+padding:8px 18px;
 
 border-radius:15px;
 
-font-size:24px;
+font-size:22px;
 
 font-weight:bold;
 
 }
 
 /*==================================================
-GAME AREA
+GAME CONTAINER
 ==================================================*/
 
 .gameContainer{
 
-flex:1;
+height:calc(100vh - 60px);
 
 display:flex;
 
-gap:18px;
+gap:10px;
 
-padding:15px;
+padding:8px;
 
 }
+
+/*==================================================
+LEFT & RIGHT COLUMN
+==================================================*/
 
 .column{
 
 flex:1;
 
-display:flex;
+display:grid;
 
-flex-direction:column;
+grid-template-rows:repeat(8,1fr);
 
-justify-content:space-evenly;
+gap:6px;
 
-gap:12px;
+height:100%;
 
 }/*==================================================
 ANIMAL CARDS
@@ -250,29 +252,30 @@ ANIMAL CARDS
 .animalCard{
 
 display:flex;
+
 align-items:center;
 
 background:#ffffff;
 
-border-radius:20px;
+border-radius:14px;
 
-padding:10px;
+padding:5px 8px;
 
 cursor:pointer;
 
-border:4px solid transparent;
+border:3px solid transparent;
 
-transition:0.25s;
+transition:.25s;
 
-box-shadow:0 5px 10px rgba(0,0,0,.18);
+box-shadow:0 3px 8px rgba(0,0,0,.18);
 
-min-height:90px;
+overflow:hidden;
 
 }
 
 .animalCard:hover{
 
-transform:scale(1.03);
+transform:scale(1.02);
 
 background:#f4fff4;
 
@@ -280,10 +283,11 @@ background:#f4fff4;
 
 .animalCard img{
 
-width:90px;
-height:90px;
+width:58px;
 
-border-radius:15px;
+height:58px;
+
+border-radius:10px;
 
 object-fit:cover;
 
@@ -293,15 +297,16 @@ flex-shrink:0;
 
 .animalCard span{
 
-margin-left:15px;
+margin-left:10px;
 
-font-size:26px;
+font-size:20px;
 
 font-weight:bold;
 
 color:#333;
 
 }
+
 
 /*==================================================
 SOUND CARDS
@@ -312,35 +317,34 @@ SOUND CARDS
 display:flex;
 
 justify-content:center;
+
 align-items:center;
 
 background:#FFF5A5;
 
-border-radius:20px;
+border-radius:14px;
 
-padding:18px;
+padding:8px;
 
-cursor:pointer;
-
-font-size:28px;
+font-size:20px;
 
 font-weight:bold;
 
-border:4px solid transparent;
+cursor:pointer;
+
+border:3px solid transparent;
 
 transition:.25s;
 
-box-shadow:0 5px 10px rgba(0,0,0,.18);
-
-min-height:90px;
+box-shadow:0 3px 8px rgba(0,0,0,.18);
 
 }
 
 .soundCard:hover{
 
-transform:scale(1.03);
-
 background:#ffe97a;
+
+transform:scale(1.02);
 
 }
 
@@ -360,9 +364,10 @@ background:#c8f7c5 !important;
 
 pointer-events:none;
 
-opacity:.85;
+opacity:.9;
 
 }
+
 
 /*==================================================
 MESSAGE
@@ -378,17 +383,17 @@ left:50%;
 
 transform:translate(-50%,-50%);
 
-font-size:55px;
+font-size:42px;
 
 font-weight:bold;
 
-display:none;
-
 text-align:center;
 
-z-index:5000;
+display:none;
 
-animation:popup .6s;
+z-index:9999;
+
+animation:popup .5s;
 
 }
 
@@ -412,6 +417,7 @@ opacity:1;
 
 }
 
+
 /*==================================================
 STAR ANIMATION
 ==================================================*/
@@ -420,7 +426,7 @@ STAR ANIMATION
 
 position:fixed;
 
-font-size:40px;
+font-size:34px;
 
 pointer-events:none;
 
@@ -434,7 +440,7 @@ animation:fall 2s linear forwards;
 
 0%{
 
-transform:translateY(-100px) rotate(0deg);
+transform:translateY(-60px) rotate(0deg);
 
 opacity:1;
 
@@ -442,13 +448,14 @@ opacity:1;
 
 100%{
 
-transform:translateY(100vh) rotate(360deg);
+transform:translateY(110vh) rotate(360deg);
 
 opacity:0;
 
 }
 
 }
+
 
 /*==================================================
 END SCREEN
@@ -462,7 +469,7 @@ display:none;
 
 #endScreen h1{
 
-font-size:48px;
+font-size:42px;
 
 color:#0b7b28;
 
@@ -472,160 +479,67 @@ margin-bottom:15px;
 
 #finalScore{
 
-font-size:34px;
+font-size:30px;
 
-margin-top:20px;
+margin-top:15px;
 
 font-weight:bold;
 
 }
 
+
 /*==================================================
-RESPONSIVE
+BUTTON ACTIVE
+==================================================*/
+
+button:active{
+
+transform:scale(.96);
+
+}
+
+
+/*==================================================
+HIDE AUDIO
+==================================================*/
+
+audio{
+
+display:none;
+
+}
+
+
+/*==================================================
+DISABLE IMAGE DRAG
+==================================================*/
+
+img{
+
+user-select:none;
+
+-webkit-user-select:none;
+
+-webkit-user-drag:none;
+
+}
+
+
+/*==================================================
+TABLETS
 ==================================================*/
 
 @media (max-width:900px){
 
 header{
 
-height:60px;
-
-padding:10px;
+height:55px;
 
 }
 
 header h2{
 
-font-size:20px;
-
-}
-
-#scoreBox{
-
 font-size:18px;
-
-padding:8px 14px;
-
-}
-
-.gameContainer{
-
-gap:10px;
-
-padding:8px;
-
-}
-
-.animalCard{
-
-min-height:72px;
-
-padding:8px;
-
-}
-
-.animalCard img{
-
-width:60px;
-height:60px;
-
-}
-
-.animalCard span{
-
-font-size:18px;
-
-margin-left:10px;
-
-}
-
-.soundCard{
-
-font-size:20px;
-
-padding:14px;
-
-min-height:72px;
-
-}
-
-#message{
-
-font-size:38px;
-
-}
-
-.instructionBox{
-
-padding:20px;
-
-}
-
-.instructionBox h1{
-
-font-size:28px;
-
-}
-
-.instructionBox p{
-
-font-size:18px;
-
-}
-
-button{
-
-font-size:18px;
-
-padding:12px 24px;
-
-}
-
-}
-
-@media (max-width:600px){
-
-.gameContainer{
-
-flex-direction:row;
-
-gap:8px;
-
-}
-
-.column{
-
-gap:8px;
-
-}
-
-.animalCard img{
-
-width:52px;
-
-height:52px;
-
-}
-
-.animalCard span{
-
-font-size:16px;
-
-}
-
-.soundCard{
-
-font-size:18px;
-
-padding:12px;
-
-min-height:65px;
-
-}
-
-header h2{
-
-font-size:16px;
 
 }
 
@@ -637,6 +551,52 @@ padding:6px 10px;
 
 }
 
+.gameContainer{
+
+height:calc(100vh - 55px);
+
+gap:6px;
+
+padding:5px;
+
+}
+
+.column{
+
+gap:5px;
+
+}
+
+.animalCard{
+
+padding:4px;
+
+}
+
+.animalCard img{
+
+width:46px;
+
+height:46px;
+
+}
+
+.animalCard span{
+
+font-size:16px;
+
+margin-left:8px;
+
+}
+
+.soundCard{
+
+font-size:16px;
+
+padding:5px;
+
+}
+
 #message{
 
 font-size:30px;
@@ -645,34 +605,83 @@ font-size:30px;
 
 }
 
+
 /*==================================================
-DISABLE IMAGE SELECTION
+MOBILE
 ==================================================*/
 
-img{
+@media (max-width:600px){
 
-user-select:none;
--webkit-user-select:none;
--webkit-user-drag:none;
+header{
+
+height:50px;
 
 }
 
-/*==================================================
-SMOOTH BUTTON PRESS
-==================================================*/
+header h2{
 
-button:active{
-
-transform:scale(.96);
+font-size:15px;
 
 }
 
-/*==================================================
-HIDE AUDIO CONTROLS
-==================================================*/
+#scoreBox{
 
-audio{
+font-size:14px;
 
-display:none;
+padding:5px 8px;
+
+}
+
+.gameContainer{
+
+height:calc(100vh - 50px);
+
+padding:4px;
+
+gap:4px;
+
+}
+
+.column{
+
+gap:4px;
+
+}
+
+.animalCard{
+
+padding:3px;
+
+}
+
+.animalCard img{
+
+width:40px;
+
+height:40px;
+
+}
+
+.animalCard span{
+
+font-size:14px;
+
+margin-left:6px;
+
+}
+
+.soundCard{
+
+font-size:14px;
+
+padding:4px;
+
+}
+
+#message{
+
+font-size:26px;
+
+}
 
 }
