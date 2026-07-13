@@ -47,7 +47,8 @@ z-index:50;
 
 .hidden{
 
-display:none;
+display:none;!important;
+}
 
 }
 
