@@ -1,6 +1,6 @@
-/* ===========================
-   GENERAL
-=========================== */
+/*==================================================
+GENERAL
+==================================================*/
 
 *{
 margin:0;
@@ -17,48 +17,55 @@ overflow:hidden;
 
 body{
 
-background:url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80")
-center center/cover no-repeat fixed;
+background:url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=80");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
 
 }
 
-/* ===========================
-SCREENS
-=========================== */
+/*==================================================
+COMMON SCREEN
+==================================================*/
 
 .screen{
 
 position:fixed;
+
 top:0;
 left:0;
+
 width:100%;
 height:100%;
 
 display:flex;
+
 justify-content:center;
 align-items:center;
 flex-direction:column;
 
-background:rgba(0,0,0,.30);
+background:rgba(0,0,0,.28);
 
-z-index:50;
+z-index:999;
 
 }
+
+/* FIXED */
 
 .hidden{
 
-display:none;!important;
-}
+display:none;
 
 }
 
-/* ===========================
+/*==================================================
 LOGO
-=========================== */
+==================================================*/
 
 #logo{
 
-width:min(420px,70vw);
+width:min(340px,70vw);
 
 animation:zoom 2s infinite alternate;
 
@@ -67,32 +74,36 @@ animation:zoom 2s infinite alternate;
 @keyframes zoom{
 
 from{
+
 transform:scale(.9);
+
 }
 
 to{
+
 transform:scale(1.05);
-}
 
 }
 
-/* ===========================
+}
+
+/*==================================================
 INSTRUCTION BOX
-=========================== */
+==================================================*/
 
 .instructionBox{
 
 background:white;
 
-padding:30px;
-
 width:min(850px,92vw);
+
+padding:30px;
 
 border-radius:25px;
 
-text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
 
-box-shadow:0 10px 25px rgba(0,0,0,.25);
+text-align:center;
 
 }
 
@@ -100,9 +111,9 @@ box-shadow:0 10px 25px rgba(0,0,0,.25);
 
 color:#0b7b28;
 
-font-size:2rem;
+margin-bottom:20px;
 
-margin-bottom:15px;
+font-size:2rem;
 
 }
 
@@ -110,9 +121,9 @@ margin-bottom:15px;
 
 font-size:1.2rem;
 
-margin:10px 0;
-
 line-height:1.6;
+
+margin:8px 0;
 
 }
 
@@ -122,13 +133,13 @@ padding:15px 35px;
 
 font-size:22px;
 
+background:#43a047;
+
+color:white;
+
 border:none;
 
 border-radius:15px;
-
-background:#4CAF50;
-
-color:white;
 
 cursor:pointer;
 
@@ -140,17 +151,35 @@ button:hover{
 
 transform:scale(1.05);
 
+background:#2e7d32;
+
 }
 
-/* ===========================
+/*==================================================
+GAME SCREEN
+==================================================*/
+
+#gameScreen{
+
+display:none;
+
+width:100%;
+
+height:100%;
+
+flex-direction:column;
+
+}
+
+/*==================================================
 HEADER
-=========================== */
+==================================================*/
 
 header{
 
 height:70px;
 
-background:rgba(255,255,255,.90);
+background:rgba(255,255,255,.92);
 
 display:flex;
 
@@ -160,44 +189,35 @@ align-items:center;
 
 padding:0 20px;
 
+box-shadow:0 3px 10px rgba(0,0,0,.15);
+
 }
 
 header h2{
 
-color:#0c6d1b;
-
 font-size:28px;
+
+color:#0b7b28;
 
 }
 
 #scoreBox{
 
-font-size:24px;
-
-font-weight:bold;
-
-background:#fff3b3;
+background:#fff59d;
 
 padding:10px 20px;
 
 border-radius:15px;
 
-}
+font-size:24px;
 
-/* ===========================
-GAME
-=========================== */
-
-#gameScreen{
-
-width:100%;
-height:100%;
-
-display:flex;
-
-flex-direction:column;
+font-weight:bold;
 
 }
+
+/*==================================================
+GAME AREA
+==================================================*/
 
 .gameContainer{
 
@@ -205,9 +225,9 @@ flex:1;
 
 display:flex;
 
-padding:12px;
+gap:18px;
 
-gap:20px;
+padding:15px;
 
 }
 
@@ -221,25 +241,90 @@ flex-direction:column;
 
 justify-content:space-evenly;
 
-}
+gap:12px;
 
-/* ===========================
+}/*==================================================
 ANIMAL CARDS
-=========================== */
+==================================================*/
 
 .animalCard{
 
 display:flex;
-
 align-items:center;
 
-background:white;
+background:#ffffff;
 
 border-radius:20px;
 
 padding:10px;
 
 cursor:pointer;
+
+border:4px solid transparent;
+
+transition:0.25s;
+
+box-shadow:0 5px 10px rgba(0,0,0,.18);
+
+min-height:90px;
+
+}
+
+.animalCard:hover{
+
+transform:scale(1.03);
+
+background:#f4fff4;
+
+}
+
+.animalCard img{
+
+width:90px;
+height:90px;
+
+border-radius:15px;
+
+object-fit:cover;
+
+flex-shrink:0;
+
+}
+
+.animalCard span{
+
+margin-left:15px;
+
+font-size:26px;
+
+font-weight:bold;
+
+color:#333;
+
+}
+
+/*==================================================
+SOUND CARDS
+==================================================*/
+
+.soundCard{
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+background:#FFF5A5;
+
+border-radius:20px;
+
+padding:18px;
+
+cursor:pointer;
+
+font-size:28px;
+
+font-weight:bold;
 
 border:4px solid transparent;
 
@@ -251,67 +336,11 @@ min-height:90px;
 
 }
 
-.animalCard:hover{
-
-transform:scale(1.02);
-
-}
-
-.animalCard img{
-
-width:90px;
-
-height:90px;
-
-border-radius:15px;
-
-object-fit:cover;
-
-}
-
-.animalCard span{
-
-margin-left:15px;
-
-font-size:28px;
-
-font-weight:bold;
-
-color:#333;
-
-}
-
-/* ===========================
-SOUND CARDS
-=========================== */
-
-.soundCard{
-
-background:#FFF5A5;
-
-border-radius:20px;
-
-padding:22px;
-
-text-align:center;
-
-font-size:28px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-border:4px solid transparent;
-
-transition:.25s;
-
-box-shadow:0 5px 10px rgba(0,0,0,.18);
-
-}
-
 .soundCard:hover{
 
-transform:scale(1.02);
+transform:scale(1.03);
+
+background:#ffe97a;
 
 }
 
@@ -319,7 +348,7 @@ transform:scale(1.02);
 
 border-color:#ff9800;
 
-background:#ffe082;
+background:#ffd54f;
 
 }
 
@@ -335,9 +364,9 @@ opacity:.85;
 
 }
 
-/* ===========================
+/*==================================================
 MESSAGE
-=========================== */
+==================================================*/
 
 #message{
 
@@ -355,19 +384,21 @@ font-weight:bold;
 
 display:none;
 
-z-index:999;
-
 text-align:center;
 
-animation:pop .6s;
+z-index:5000;
+
+animation:popup .6s;
 
 }
 
-@keyframes pop{
+@keyframes popup{
 
 0%{
 
 transform:translate(-50%,-50%) scale(.2);
+
+opacity:0;
 
 }
 
@@ -375,13 +406,15 @@ transform:translate(-50%,-50%) scale(.2);
 
 transform:translate(-50%,-50%) scale(1);
 
-}
+opacity:1;
 
 }
 
-/* ===========================
-STAR EFFECT
-=========================== */
+}
+
+/*==================================================
+STAR ANIMATION
+==================================================*/
 
 .star{
 
@@ -389,11 +422,11 @@ position:fixed;
 
 font-size:40px;
 
-animation:fall 2s linear forwards;
-
 pointer-events:none;
 
-z-index:999;
+z-index:9999;
+
+animation:fall 2s linear forwards;
 
 }
 
@@ -401,7 +434,7 @@ z-index:999;
 
 0%{
 
-transform:translateY(-100px) rotate(0);
+transform:translateY(-100px) rotate(0deg);
 
 opacity:1;
 
@@ -409,7 +442,7 @@ opacity:1;
 
 100%{
 
-transform:translateY(700px) rotate(360deg);
+transform:translateY(100vh) rotate(360deg);
 
 opacity:0;
 
@@ -417,17 +450,23 @@ opacity:0;
 
 }
 
-/* ===========================
+/*==================================================
 END SCREEN
-=========================== */
+==================================================*/
+
+#endScreen{
+
+display:none;
+
+}
 
 #endScreen h1{
 
 font-size:48px;
 
-margin-bottom:20px;
-
 color:#0b7b28;
+
+margin-bottom:15px;
 
 }
 
@@ -437,17 +476,21 @@ font-size:34px;
 
 margin-top:20px;
 
+font-weight:bold;
+
 }
 
-/* ===========================
+/*==================================================
 RESPONSIVE
-=========================== */
+==================================================*/
 
-@media(max-width:900px){
+@media (max-width:900px){
 
 header{
 
 height:60px;
+
+padding:10px;
 
 }
 
@@ -461,7 +504,7 @@ font-size:20px;
 
 font-size:18px;
 
-padding:8px 12px;
+padding:8px 14px;
 
 }
 
@@ -484,7 +527,6 @@ padding:8px;
 .animalCard img{
 
 width:60px;
-
 height:60px;
 
 }
@@ -501,13 +543,21 @@ margin-left:10px;
 
 font-size:20px;
 
-padding:15px;
+padding:14px;
+
+min-height:72px;
+
+}
+
+#message{
+
+font-size:38px;
 
 }
 
 .instructionBox{
 
-padding:18px;
+padding:20px;
 
 }
 
@@ -527,23 +577,19 @@ button{
 
 font-size:18px;
 
-padding:12px 22px;
-
-}
-
-#message{
-
-font-size:36px;
+padding:12px 24px;
 
 }
 
 }
 
-@media(max-width:600px){
+@media (max-width:600px){
 
 .gameContainer{
 
 flex-direction:row;
+
+gap:8px;
 
 }
 
@@ -573,6 +619,60 @@ font-size:18px;
 
 padding:12px;
 
+min-height:65px;
+
 }
+
+header h2{
+
+font-size:16px;
+
+}
+
+#scoreBox{
+
+font-size:16px;
+
+padding:6px 10px;
+
+}
+
+#message{
+
+font-size:30px;
+
+}
+
+}
+
+/*==================================================
+DISABLE IMAGE SELECTION
+==================================================*/
+
+img{
+
+user-select:none;
+-webkit-user-select:none;
+-webkit-user-drag:none;
+
+}
+
+/*==================================================
+SMOOTH BUTTON PRESS
+==================================================*/
+
+button:active{
+
+transform:scale(.96);
+
+}
+
+/*==================================================
+HIDE AUDIO CONTROLS
+==================================================*/
+
+audio{
+
+display:none;
 
 }
