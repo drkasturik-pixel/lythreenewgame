@@ -1,89 +1,141 @@
-/* ============================
-   Match Animal to Sound
-   Part 1
-============================ */
+/*==================================================
+MATCH ANIMAL TO SOUND
+Author : ChatGPT
+==================================================*/
+
+/*=========================
+ANIMAL DATA
+=========================*/
 
 const animals = [
+
 {
 id:"cow",
 name:"Cow",
 image:"assets/cow.jpg",
 sound:"assets/moo.mp3.mp3"
 },
+
 {
 id:"dog",
 name:"Dog",
 image:"assets/dog.jpg",
 sound:"assets/woof.mp3.mp3"
 },
+
 {
 id:"cat",
 name:"Cat",
 image:"assets/cat.jpg",
 sound:"assets/meow.mp3.mp3"
 },
+
 {
 id:"horse",
 name:"Horse",
 image:"assets/horse.jpg",
 sound:"assets/neigh.mp3.mp3"
 },
+
 {
 id:"pig",
 name:"Pig",
 image:"assets/pig.jpg",
 sound:"assets/oink.mp3.mp3"
 },
+
 {
 id:"lion",
 name:"Lion",
 image:"assets/lion.jpg",
 sound:"assets/roar.mp3.mp3"
 },
+
 {
 id:"snake",
 name:"Snake",
 image:"assets/snake.jpg",
 sound:"assets/hiss.mp3.mp3"
 },
+
 {
 id:"tiger",
 name:"Tiger",
 image:"assets/tiger.jpg",
 sound:"assets/growl.mp3.mp3"
 }
+
 ];
 
-/* ========================= */
+
+/*=========================
+GLOBAL VARIABLES
+=========================*/
 
 let selectedSound = null;
+
 let score = 0;
+
 let matched = 0;
 
-/* ========================= */
 
-const animalColumn = document.getElementById("animalColumn");
-const soundColumn = document.getElementById("soundColumn");
+/*=========================
+GET HTML ELEMENTS
+=========================*/
 
-const scoreBox = document.getElementById("score");
+const logoScreen = document.getElementById("logoScreen");
 
-const message = document.getElementById("message");
+const instructionScreen =
+document.getElementById("instructionScreen");
 
-/* =========================
-   PRELOAD AUDIO
-========================= */
+const gameScreen =
+document.getElementById("gameScreen");
 
-animals.forEach(a=>{
-let audio = new Audio(a.sound);
+const endScreen =
+document.getElementById("endScreen");
+
+const animalColumn =
+document.getElementById("animalColumn");
+
+const soundColumn =
+document.getElementById("soundColumn");
+
+const scoreLabel =
+document.getElementById("score");
+
+const finalScore =
+document.getElementById("finalScore");
+
+const message =
+document.getElementById("message");
+
+const correctAudio =
+document.getElementById("correctAudio");
+
+const wrongAudio =
+document.getElementById("wrongAudio");
+
+
+/*=========================
+PRELOAD AUDIO
+=========================*/
+
+animals.forEach(animal=>{
+
+const audio=new Audio(animal.sound);
+
 audio.preload="auto";
+
 });
 
-document.getElementById("correctAudio").load();
-document.getElementById("wrongAudio").load();
+correctAudio.load();
 
-/* =========================
-   SPEECH
-========================= */
+wrongAudio.load();
+
+
+/*=========================
+SPEECH
+=========================*/
 
 function speak(text){
 
@@ -92,19 +144,23 @@ return;
 
 speechSynthesis.cancel();
 
-const speech = new SpeechSynthesisUtterance(text);
+const speech =
+new SpeechSynthesisUtterance(text);
 
 speech.rate=.9;
+
 speech.pitch=1.1;
+
 speech.volume=1;
 
 speechSynthesis.speak(speech);
 
 }
 
-/* =========================
-   SHUFFLE
-========================= */
+
+/*=========================
+SHUFFLE
+=========================*/
 
 function shuffle(array){
 
@@ -112,7 +168,7 @@ let arr=[...array];
 
 for(let i=arr.length-1;i>0;i--){
 
-let j=Math.floor(Math.random()*(i+1));
+const j=Math.floor(Math.random()*(i+1));
 
 [arr[i],arr[j]]=[arr[j],arr[i]];
 
@@ -122,42 +178,109 @@ return arr;
 
 }
 
-/* =========================
-   CREATE GAME
-========================= */
+
+/*=========================
+WINDOW LOAD
+=========================*/
+
+window.onload=function(){
+
+logoScreen.style.display="flex";
+
+instructionScreen.style.display="none";
+
+gameScreen.style.display="none";
+
+endScreen.style.display="none";
+
+
+setTimeout(function(){
+
+logoScreen.style.display="none";
+
+instructionScreen.style.display="flex";
+
+speak(
+
+"Welcome. Match the animal to its sound. Click Start Game."
+
+);
+
+},5000);
+
+};
+
+
+/*=========================
+START BUTTON
+=========================*/
+
+document
+.getElementById("startBtn")
+.addEventListener("click",function(){
+
+instructionScreen.style.display="none";
+
+gameScreen.style.display="flex";
+
+createGame();
+
+speak(
+
+"Click a sound card. Listen carefully. Then click the matching animal."
+
+);
+
+});/*==================================================
+CREATE GAME BOARD
+==================================================*/
 
 function createGame(){
+
+selectedSound=null;
 
 animalColumn.innerHTML="";
 soundColumn.innerHTML="";
 
+scoreLabel.textContent=score;
+
+/*=========================
+CREATE ANIMAL CARDS
+=========================*/
+
 animals.forEach(animal=>{
 
-let card=document.createElement("div");
+const card=document.createElement("div");
 
 card.className="animalCard";
 
 card.dataset.id=animal.id;
 
 card.innerHTML=`
-
 <img src="${animal.image}" alt="${animal.name}">
-
 <span>${animal.name}</span>
-
 `;
 
-card.onclick=()=>selectAnimal(card);
+card.addEventListener("click",function(){
+
+selectAnimal(card);
+
+});
 
 animalColumn.appendChild(card);
 
 });
 
-/* Shuffle Sounds */
 
-shuffle(animals).forEach(animal=>{
+/*=========================
+CREATE SHUFFLED SOUND CARDS
+=========================*/
 
-let card=document.createElement("div");
+const shuffled=shuffle(animals);
+
+shuffled.forEach(animal=>{
+
+const card=document.createElement("div");
 
 card.className="soundCard";
 
@@ -165,23 +288,20 @@ card.dataset.id=animal.id;
 
 card.innerHTML="🔊 Sound";
 
-card.onclick=()=>{
+card.addEventListener("click",function(){
 
-document
-.querySelectorAll(".soundCard")
+document.querySelectorAll(".soundCard")
 .forEach(c=>c.classList.remove("selected"));
 
 card.classList.add("selected");
 
 selectedSound=animal.id;
 
-/* play sound */
+playSound(animal.sound);
 
-let audio=new Audio(animal.sound);
+resetVoiceReminder();
 
-audio.play();
-
-};
+});
 
 soundColumn.appendChild(card);
 
@@ -189,103 +309,116 @@ soundColumn.appendChild(card);
 
 }
 
-/* =========================
-   SPLASH SCREEN
-========================= */
 
-window.onload=function(){
+/*==================================================
+PLAY SOUND
+==================================================*/
 
-setTimeout(()=>{
+function playSound(soundFile){
 
-document
-.getElementById("logoScreen")
-.classList.add("hidden");
+const audio=new Audio(soundFile);
 
-document
-.getElementById("instructionScreen")
-.classList.remove("hidden");
+audio.currentTime=0;
 
-speak(
-"Welcome! Match the animal to its sound. Click a sound card and then click the matching animal picture."
-);
+audio.play().catch(function(){
 
-},5000);
+console.log("Audio playback blocked.");
 
-};
+});
 
-/* =========================
-   START BUTTON
-========================= */
+}
 
-document
-.getElementById("startBtn")
-.onclick=function(){
 
-document
-.getElementById("instructionScreen")
-.classList.add("hidden");
+/*==================================================
+VOICE REMINDER
+==================================================*/
 
-document
-.getElementById("gameScreen")
-.classList.remove("hidden");
+let reminderTimer;
 
-createGame();
+function resetVoiceReminder(){
+
+clearTimeout(reminderTimer);
+
+reminderTimer=setTimeout(function(){
+
+if(matched<animals.length){
 
 speak(
-"Let's begin. Click on a sound card and then tap the correct animal."
+"Now tap the matching animal."
 );
 
-};/* =========================
-   PART 2
-========================= */
+}
 
-/* Correct Answer */
+},8000);
+
+}
+
+
+/*==================================================
+SHOW MESSAGE
+==================================================*/
 
 function showMessage(text,color){
 
 message.innerHTML=text;
+
 message.style.color=color;
+
 message.style.display="block";
 
-setTimeout(()=>{
+setTimeout(function(){
+
 message.style.display="none";
+
 },1800);
 
 }
 
-/* ========================= */
+
+/*==================================================
+STAR ANIMATION
+==================================================*/
 
 function createStars(){
 
 for(let i=0;i<20;i++){
 
-let star=document.createElement("div");
+const star=document.createElement("div");
 
 star.className="star";
 
 star.innerHTML="⭐";
 
 star.style.left=Math.random()*100+"vw";
-star.style.top="-50px";
-star.style.animationDuration=(1+Math.random()*2)+"s";
+
+star.style.top="-40px";
+
+star.style.animationDuration=
+(1+Math.random()*2)+"s";
 
 document.body.appendChild(star);
 
-setTimeout(()=>{
+setTimeout(function(){
+
 star.remove();
+
 },2500);
 
 }
 
-}
-
-/* ========================= */
+}/*==================================================
+PART 2A
+MATCHING LOGIC
+==================================================*/
 
 function selectAnimal(card){
 
+// Child must click a sound first
 if(selectedSound===null){
 
-speak("Click on a sound card first.");
+showMessage("🔊 Click a sound first!","#ff5722");
+
+speak("Click a sound card first.");
 
 return;
 
@@ -293,11 +426,19 @@ return;
 
 const animalID=card.dataset.id;
 
-/* Correct */
+/*==============================
+CORRECT ANSWER
+==============================*/
 
 if(animalID===selectedSound){
 
+correctAudio.currentTime=0;
+
+correctAudio.play().catch(()=>{});
+
 card.classList.add("correct");
+
+/* Disable matching sound card */
 
 document.querySelectorAll(".soundCard").forEach(sound=>{
 
@@ -307,89 +448,131 @@ sound.classList.add("correct");
 
 sound.style.pointerEvents="none";
 
+sound.classList.remove("selected");
+
 }
 
 });
 
-document.getElementById("correctAudio").play();
+/* Disable animal */
 
-showMessage("⭐ ⭐ ⭐<br>👍","green");
+card.style.pointerEvents="none";
+
+/* Celebration */
 
 createStars();
 
+showMessage("⭐ ⭐ ⭐<br>👍 Great!","green");
+
+speak("Excellent!");
+
 score++;
+
 matched++;
 
-scoreBox.innerHTML=score;
+scoreLabel.textContent=score;
+
+/* Reset */
 
 selectedSound=null;
 
+/* Finished? */
+
 if(matched===animals.length){
 
-setTimeout(endGame,1500);
+setTimeout(function(){
+
+endGame();
+
+},1500);
 
 }
 
 }
 
-/* Wrong */
+/*==============================
+WRONG ANSWER
+==============================*/
 
 else{
 
-document.getElementById("wrongAudio").play();
+wrongAudio.currentTime=0;
 
-showMessage("❌<br>Try Again","red");
+wrongAudio.play().catch(()=>{});
+
+showMessage("❌ Try Again","red");
 
 speak("Try again.");
 
-}
+document.querySelectorAll(".soundCard").forEach(card=>{
+
+card.classList.remove("selected");
+
+});
+
+selectedSound=null;
 
 }
 
-/* =========================
-   END GAME
-========================= */
+}
+
+
+/*==================================================
+UPDATE SCORE
+==================================================*/
+
+function updateScore(){
+
+scoreLabel.textContent=score;
+
+}
+
+
+/*==================================================
+RESET GAME SELECTION
+==================================================*/
+
+function clearSelection(){
+
+selectedSound=null;
+
+document.querySelectorAll(".soundCard").forEach(card=>{
+
+card.classList.remove("selected");
+
+});
+
+}/*==================================================
+PART 2B
+END GAME & CONFETTI
+==================================================*/
 
 function endGame(){
 
-document
-.getElementById("gameScreen")
-.classList.add("hidden");
+gameScreen.style.display="none";
 
-document
-.getElementById("endScreen")
-.classList.remove("hidden");
+endScreen.style.display="flex";
 
-document
-.getElementById("finalScore")
-.innerHTML=
-"Your Score : "+score+" / "+animals.length;
+finalScore.innerHTML=
+"🏆 Your Score : "+score+" / "+animals.length;
 
 speak(
-"Congratulations! You scored "+
-score+
+"Congratulations! You matched all the animals. Your score is "
++score+
 " out of "+
-animals.length
+animals.length+
+". Great job!"
 );
 
 createConfetti();
 
 }
 
-/* =========================
-   CONFETTI
-========================= */
+/*==================================================
+CONFETTI ANIMATION
+==================================================*/
 
 function createConfetti(){
-
-for(let i=0;i<80;i++){
-
-let confetti=document.createElement("div");
-
-confetti.style.position="fixed";
-
-confetti.style.width="10px";
-confetti.style.height="10px";
 
 const colors=[
 "#ff0000",
@@ -398,75 +581,106 @@ const colors=[
 "#ffff00",
 "#ff00ff",
 "#00ffff",
-"#ff8800"
+"#ff9800"
 ];
 
-confetti.style.background=
+for(let i=0;i<120;i++){
+
+const piece=document.createElement("div");
+
+piece.style.position="fixed";
+
+piece.style.width="10px";
+piece.style.height="10px";
+
+piece.style.background=
 colors[Math.floor(Math.random()*colors.length)];
 
-confetti.style.left=
-Math.random()*100+"vw";
+piece.style.left=Math.random()*100+"vw";
 
-confetti.style.top="-20px";
+piece.style.top="-20px";
 
-confetti.style.opacity="0.9";
+piece.style.opacity="0.9";
 
-confetti.style.zIndex="9999";
+piece.style.borderRadius="50%";
 
-confetti.style.transition="all 3s linear";
+piece.style.pointerEvents="none";
 
-document.body.appendChild(confetti);
+piece.style.zIndex="9999";
+
+document.body.appendChild(piece);
+
+const x=(Math.random()*300)-150;
+const y=window.innerHeight+100;
+const rotate=Math.random()*1080;
+
+piece.animate(
+[
+{
+transform:"translate(0,0) rotate(0deg)",
+opacity:1
+},
+{
+transform:`translate(${x}px,${y}px) rotate(${rotate}deg)`,
+opacity:0
+}
+],
+{
+duration:2500+Math.random()*1500,
+easing:"ease-out"
+}
+);
 
 setTimeout(()=>{
-
-confetti.style.transform=
-"translateY(110vh) rotate(720deg)";
-
-confetti.style.opacity="0";
-
-},50);
-
-setTimeout(()=>{
-
-confetti.remove();
-
-},3200);
+piece.remove();
+},4000);
 
 }
 
 }
 
-/* =========================
-   EXTRA VOICE HELP
-========================= */
+/*==================================================
+PLAY AGAIN
+==================================================*/
 
-let idleTimer;
+function playAgain(){
 
-function resetVoiceTimer(){
+score=0;
+matched=0;
+selectedSound=null;
 
-clearTimeout(idleTimer);
+animalColumn.innerHTML="";
+soundColumn.innerHTML="";
 
-idleTimer=setTimeout(()=>{
+scoreLabel.textContent="0";
 
-if(matched<animals.length){
+endScreen.style.display="none";
+
+gameScreen.style.display="flex";
+
+createGame();
 
 speak(
-"Tap a sound card. Listen carefully and then tap the correct animal."
+"Let's play again. Click a sound card and then click the matching animal."
 );
 
 }
 
-},12000);
+/*==================================================
+PLAY AGAIN BUTTON
+==================================================*/
+
+const playAgainButton=document.querySelector("#endScreen button");
+
+if(playAgainButton){
+
+playAgainButton.onclick=playAgain;
 
 }
 
-document.addEventListener("click",resetVoiceTimer);
-
-resetVoiceTimer();
-
-/* =========================
-   PREVENT IMAGE DRAG
-========================= */
+/*==================================================
+PREVENT IMAGE DRAGGING
+==================================================*/
 
 document.addEventListener("dragstart",function(e){
 
@@ -474,14 +688,20 @@ e.preventDefault();
 
 });
 
-/* =========================
-   MOBILE TOUCH
-========================= */
+/*==================================================
+TOUCH SUPPORT
+==================================================*/
 
 document.addEventListener("touchstart",function(){},{passive:true});
 
-/* =========================
-   GAME READY
-========================= */
+/*==================================================
+KEEP SCORE DISPLAY UPDATED
+==================================================*/
 
-console.log("Match Animal To Sound Loaded Successfully");
+updateScore();
+
+/*==================================================
+READY
+==================================================*/
+
+console.log("Match Animal to Sound Game Loaded Successfully");
